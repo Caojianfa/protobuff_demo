@@ -1,20 +1,29 @@
 package com.caojianfa;
 
-import static org.junit.Assert.assertTrue;
-
+import com.google.protobuf.InvalidProtocolBufferException;
 import org.junit.Test;
-
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-{
-    /**
-     * Rigorous Test :-)
-     */
+public class AppTest {
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void testN() throws InvalidProtocolBufferException {
+        PersonModel.Person.Builder builder = PersonModel.Person.newBuilder();
+        builder.setId(1);
+        builder.setName("caojianfa");
+        builder.setEmail("caojianfa@imomo.com");
+
+        PersonModel.Person person = builder.build();
+        System.out.println("before:" + person);
+
+        System.out.println("===Person Byte:");
+        for (byte b : person.toByteArray()) {
+            System.out.print(b);
+        }
+        System.out.println("================");
+
+        byte[] byteArray = person.toByteArray();
+        PersonModel.Person p2 = PersonModel.Person.parseFrom(byteArray);
+        System.out.println("after id:" + p2.getId());
+        System.out.println("after name:" + p2.getName());
+        System.out.println("after email:" + p2.getEmail());
+
     }
 }
